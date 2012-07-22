@@ -40,4 +40,6 @@ EOF",
 		timeout => 600,
 	}
 
+	package{'cpanminus': ensure => installed}
+
 }
