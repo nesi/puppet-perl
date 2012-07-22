@@ -25,7 +25,7 @@ class perl (
 	}
 
 	exec{'configure_cpan':
-		command	=> "cpan <<EOF
+		command	=> "/usr/bin/cpan <<EOF
 yes	
 yes
 no
