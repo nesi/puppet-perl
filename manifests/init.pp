@@ -40,6 +40,11 @@ EOF",
 		timeout => 600,
 	}
 
-	package{'cpanminus': ensure => installed}
-
+  exec{"install_pmuninstall":
+  	path 		=> ['/usr/bin/','/bin'],
+   	command => "cpan -i App::pmuninstall",
+   	unless 	=> "perl -MApp::pmuninstall -e 'print \"App::pmuninstall loaded\"'",
+   	timeout => 600,
+   	require => [Package[$perl::package],Exec['configure_cpan']],
+  }
 }

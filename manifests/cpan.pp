@@ -8,7 +8,7 @@ define perl::cpan(
 	  exec{"cpan_load_${name}":
 	  	path 		=> ['/usr/bin/','/bin'],
 	   	command => "cpan -i ${name}",
-	   	unless 	=> "perl -M${name} -e 'print 1' 2>/dev/null",
+	   	unless 	=> "perl -M${name} -e 'print \"${name} loaded\"'",
 	   	timeout => 600,
 	   	require => [Package[$perl::package],Exec['configure_cpan']],
 	  }
