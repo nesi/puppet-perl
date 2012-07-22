@@ -12,13 +12,17 @@ define perl::cpan(
 	   	timeout => 600,
 	   	require => [Package[$perl::package],Exec['configure_cpan']],
 	  }
-	# } elsif $ensure == absent {
-	# 	exec{"cpan_load_${name}":
-	#   	path 		=> ['/usr/bin/','/bin'],
-	#    	command => "cpan -i ${name}",
-	#    	unless 	=> "perl -M${name} -e 'print 1' 2>/dev/null",
-	#    	timeout => 600,
-	#    	require => [Package[$perl::package],Exec['configure_cpan']],
-	#   }
+	} elsif $ensure == absent {
+		if $name != "App::pmuninstall"{
+			exec{"cpan_load_${name}":
+		  	path 		=> ['/usr/bin/','/bin'],
+		   	command => "pm-uninstall ${name}",
+		   	onlyif 	=> "perl -M${name} -e 'print 1' 2>/dev/null",
+		   	timeout => 600,
+		   	require => [Package[$perl::package],Exec['configure_cpan','install_pmuninstall']],
+		  }
+		} else {
+			warning ("App::pmuninstall is required, and will not be uninstalled on ${fqdn}")
+		}
 	}
 }
