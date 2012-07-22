@@ -36,7 +36,8 @@ yes
 quit
 EOF",
 		creates => "/root/.cpan/CPAN/MyConfig.pm",
-		require => Package[$package]
+		require => Package[$package],
+		timeout => 600,
 	}
 
 }
