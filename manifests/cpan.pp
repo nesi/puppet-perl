@@ -1,3 +1,5 @@
+# This should be ensurable, but there's not point until
+# a 'remove' script is figured ot for 'absent'
 
 define perl::cpan(
 
