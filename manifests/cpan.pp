@@ -1,12 +1,13 @@
 define perl::cpan(
-	$ensure 	= 'installed'
+	$ensure 	= 'installed',
+	$timeout	= 120
 ){
 	if $ensure == installed {
 	  exec{"cpan_load_${name}":
 	  	path 		=> ['/usr/bin/','/bin'],
 	   	command => "cpan -i ${name}",
 	   	unless 	=> "perl -M${name} -e 'print \"${name} loaded\"'",
-	   	timeout => 600,
+	   	timeout => $tiemout,
 	   	require => [Package[$perl::package],Exec['configure_cpan']],
 	  }
 	} elsif $ensure == absent {
@@ -15,7 +16,7 @@ define perl::cpan(
 		  	path 		=> ['/usr/bin/','/bin','/usr/local/bin'],
 		   	command => "pm-uninstall ${name}",
 		   	onlyif 	=> "perl -M${name} -e 'print 1' 2>/dev/null",
-		   	timeout => 600,
+		   	timeout => $timeout,
 		   	require => [Package[$perl::package],Exec['configure_cpan','install_pmuninstall']],
 		  }
 		} else {
