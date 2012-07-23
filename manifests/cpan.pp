@@ -12,7 +12,7 @@ define perl::cpan(
 	  	path 		=> ['/usr/bin/','/bin'],
 	   	command => "cpan -i ${name}",
 	   	unless 	=> "perl -M${name} -e 'print \"${name} loaded\"'",
-	   	timeout => $tiemout,
+	   	timeout => $timeout,
 	   	require => [Package[$perl::package],Exec['configure_cpan']],
 	  }
 	} elsif $ensure == absent {

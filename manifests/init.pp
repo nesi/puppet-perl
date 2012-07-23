@@ -12,15 +12,22 @@ class perl (
 ){
 
 	$package = 'perl'
+	$pmtools_package = 'pmtools'
 
 	if $version == false {
 		package{$package:
+			ensure => $ensure,
+		}
+		package{$pmtools_package:
 			ensure => $ensure,
 		}
 	} else {
 		package{$package:
 			ensure 	=> $ensure,
 			version => $version
+		}
+		package{$pmtools_package:
+			ensure => $ensure,
 		}
 	}
 
