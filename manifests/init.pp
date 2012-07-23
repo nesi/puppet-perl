@@ -31,8 +31,9 @@ class perl (
 		}
 	}
 
-	exec{'configure_cpan':
-		command	=> "/usr/bin/cpan <<EOF
+if $ensure == installed {
+		exec{'configure_cpan':
+			command	=> "/usr/bin/cpan <<EOF
 yes	
 yes
 no
@@ -42,16 +43,17 @@ ${cpan_mirror}
 yes
 quit
 EOF",
-		creates => "/root/.cpan/CPAN/MyConfig.pm",
-		require => Package[$package],
-		timeout => 600,
-	}
+			creates => "/root/.cpan/CPAN/MyConfig.pm",
+			require => Package[$package],
+			timeout => 600,
+		}
 
-  exec{"install_pmuninstall":
-  	path 		=> ['/usr/bin/','/bin'],
-   	command => "cpan -i App::pmuninstall",
-   	unless 	=> "perl -MApp::pmuninstall -e 'print \"App::pmuninstall loaded\"'",
-   	timeout => 600,
-   	require => [Package[$perl::package],Exec['configure_cpan']],
-  }
+	  exec{"install_pmuninstall":
+	  	path 		=> ['/usr/bin/','/bin'],
+	   	command => "cpan -i App::pmuninstall",
+	   	unless 	=> "perl -MApp::pmuninstall -e 'print \"App::pmuninstall loaded\"'",
+	   	timeout => 600,
+	   	require => [Package[$perl::package],Exec['configure_cpan']],
+	  }
+	}
 }
