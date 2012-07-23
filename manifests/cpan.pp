@@ -1,3 +1,8 @@
+# Some CPAN modules should be installed from packages
+# especially those with interactive installers
+#
+# SOAP and DBD::Pg are known to not work
+
 define perl::cpan(
 	$ensure 	= 'installed',
 	$timeout	= 120
