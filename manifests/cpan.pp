@@ -1,7 +1,8 @@
 # Some CPAN modules should be installed from packages
 # especially those with interactive installers
 #
-# SOAP and DBD::Pg are known to not work
+# SOAP is known to not work, but it's been unmaintained for a while
+# 
 
 define perl::cpan(
 	$ensure 	= 'installed',
@@ -29,3 +30,14 @@ define perl::cpan(
 		}
 	}
 }
+
+# Term::ReadLine::Gnu is special, the module isn't to be included directly.Naughty.
+# for it and similar CPAN modules try something like this in your manifest
+  # exec{"install_readline_gnu":
+  #   path    => ['/usr/bin/','/bin'],
+  #   command => "cpan -i Term::ReadLine::Gnu",
+  #   # unless  => "perl -MTerm::ReadLine::Gnu -e 'print \"Term::ReadLine::Gnu loaded\"'",
+  #   creates => '/usr/local/lib/perl/5.14.2/Term/ReadLine/Gnu.pm',
+  #   timeout => 600,
+  #   require => [Package[$perl::package],Exec['configure_cpan']],
+  # }

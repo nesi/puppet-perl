@@ -8,11 +8,12 @@
 class perl (
 	$version 			= false,
 	$ensure				= installed,
-	$cpan_mirror	= 'ftp://ftp.auckland.ac.nz/pub/perl/CPAN/'
+	$cpan_mirror	= 'ftp://ftp.auckland.ac.nz/pub/perl/CPAN/',
+	$package = 'perl',
+	$pmtools_package = 'pmtools'
 ){
 
-	$package = 'perl'
-	$pmtools_package = 'pmtools'
+
 
 	if $version == false {
 		package{$package:
