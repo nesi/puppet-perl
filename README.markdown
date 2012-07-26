@@ -44,11 +44,11 @@ I reccomend you at _least_ specify a CPAN mirror.
 
 ## Installing with parameters
 
-    class{'perl':
-    	version 			=> '5.8.6',
-			ensure				=> installed,
-			cpan_mirror		=> 'ftp://some.mirror.cpan.org/pub/perl/CPAN/',
-  	}
+		class{'perl':
+				version 			=> '5.8.6',
+				ensure				=> installed,
+				cpan_mirror		=> 'ftp://some.mirror.cpan.org/pub/perl/CPAN/',
+		}
 
 ## Parameters
 
@@ -61,11 +61,23 @@ I reccomend you at _least_ specify a CPAN mirror.
 # Using the `perl::cpan` resource definition
 ============================================
 
+Install a Perl module from CPAN:
+
+    perl::cpan{'module::name': ensure => installed}
+
+Ensure that a Perl module is not installed:
+
+    perl::cpan{'module::name': ensure => absent}
+
+## Parameters
+
+* **ensure**: Ensure that the module is 'installed' or 'absent', defaults to installed.
+* **timeout**: Changes the timeout in seconds for installing the Perl module, some modules can take a quite some time to compile. By default it is set to 120 seconds.
 
 # To do...
 ==========
 
-* Change the CPAN definition to a case format for handling exceptional packages
+* Change the CPAN definition to a case format for handling exceptional packages, broken package, and obsolete packages.
 * Create some facter scripts for Perl, such as getting version and reporting CPAN mirror
 
 # Credits
